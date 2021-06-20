@@ -142,12 +142,12 @@ const createAds = function () {
     offer: {
       title: `${cutRandomElementArray(TITLES)}`,
       address: `${locationX}, ${locationY}`,
-      price: `${getRandomNumber(PRICES.MIN, PRICES.MAX)} рублей`,
+      price: `${getRandomNumber(PRICES.MIN, PRICES.MAX)}`,
       type: `${getRandomElementArray(TYPE_HOUSES)}`,
-      rooms: `${getRandomNumber(ROOMS.MIN, ROOMS.MAX)} комнат(ы)`,
-      guests: `${getRandomNumber(GUESTS.MIN, GUESTS.MAX)} человек(а)`,
-      checkin: `Время заселения ${getRandomElementArray(CHECKIN)}`,
-      checkout: `Время выезда ${getRandomElementArray(CHECKOUT)}`,
+      rooms: `${getRandomNumber(ROOMS.MIN, ROOMS.MAX)}`,
+      guests: `${getRandomNumber(GUESTS.MIN, GUESTS.MAX)}`,
+      checkin: `${getRandomElementArray(CHECKIN)}`,
+      checkout: `${getRandomElementArray(CHECKOUT)}`,
       features: `${getArrayRandomLength(FEATURES).join(', ')}`,
       description: `${cutRandomElementArray(DESCRIPTIONS)}`,
       photos: `${getArrayRandomLength(PHOTOS).join(', ')}`,
@@ -160,6 +160,9 @@ const createAds = function () {
 };
 
 const listAds = new Array(QUANTITY_ADS).fill(null).map(() => createAds());
+
 listAds; // Чтобы eslint не ругался, что listAds не используется
 // console.log(listAds);
 
+export{listAds};
+export{FEATURES};
