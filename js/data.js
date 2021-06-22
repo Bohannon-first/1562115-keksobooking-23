@@ -140,7 +140,7 @@ const createAds = function () {
       avatar: `${cutRandomElementArray(arrayAvatars).join()}`,
     },
     offer: {
-      title: `${cutRandomElementArray(TITLES)}`,
+      title: cutRandomElementArray(TITLES),
       address: `${locationX}, ${locationY}`,
       price: `${getRandomNumber(PRICES.MIN, PRICES.MAX)}`,
       type: `${getRandomElementArray(TYPE_HOUSES)}`,
@@ -148,9 +148,9 @@ const createAds = function () {
       guests: `${getRandomNumber(GUESTS.MIN, GUESTS.MAX)}`,
       checkin: `${getRandomElementArray(CHECKIN)}`,
       checkout: `${getRandomElementArray(CHECKOUT)}`,
-      features: `${getArrayRandomLength(FEATURES).join(', ')}`,
-      description: `${cutRandomElementArray(DESCRIPTIONS)}`,
-      photos: `${getArrayRandomLength(PHOTOS).join(', ')}`,
+      features: getArrayRandomLength(FEATURES),
+      description: cutRandomElementArray(DESCRIPTIONS),
+      photos: getArrayRandomLength(PHOTOS),
     },
     location: {
       lat: `${locationX}`,
@@ -165,4 +165,3 @@ listAds; // Чтобы eslint не ругался, что listAds не испо�
 // console.log(listAds);
 
 export{listAds};
-export{FEATURES};
