@@ -20,9 +20,9 @@ const TYPE_HOUSES_DICTIONARY = {
 
 // Массив с объектами-объявлениями
 const similarAds = listAds;
-console.log(similarAds);
+// console.log(similarAds);
 
-// Проверка на наличие текста внутри элемента. Если текста нет - удалить элемент
+// Проверка на отсутствие текста внутри элемента. Если текста нет - удалить элемент
 const checkContent = (element) => {
   if (element.textContent === '') {
     element.remove();
@@ -32,6 +32,8 @@ const checkContent = (element) => {
 
 // Наполнение карточек-объявлений данными из массива с объектами-объявлениями
 similarAds.forEach((ad) => {
+
+  // Клонирование шаблона карточки в отдельную переменную
   const adElement = similarPopup.cloneNode(true);
 
   // Переменные-элементы в карточке объявления
@@ -56,15 +58,7 @@ similarAds.forEach((ad) => {
   adTextTime.textContent = `Заезд после ${ad.offer.checkin}, выезд до ${ad.offer.checkout}`;
   adDescription.textContent = ad.offer.description;
 
-  // adElement.querySelector('.popup__avatar').src = ad.author.avatar;
-  // adElement.querySelector('.popup__title').textContent = ad.offer.title;
-  // adElement.querySelector('.popup__text--address').textContent = ad.offer.address;
-  // adElement.querySelector('.popup__text--price').textContent = `${ad.offer.price} ₽/ночь`;
-  // adElement.querySelector('.popup__type').textContent = TYPE_HOUSES_DICTIONARY[ad.offer.type];
-  // adElement.querySelector('.popup__text--capacity').textContent = `${ad.offer.rooms} комнаты для ${ad.offer.guests} гостей`;
-  // adElement.querySelector('.popup__text--time').textContent = `Заезд после ${ad.offer.checkin}, выезд до ${ad.offer.checkout}`;
-  // adElement.querySelector('.popup__description').textContent = ad.offer.description;
-
+  // Создание тегов img с фотографиями жилья
   ad.offer.photos.forEach((photo) => {
     const photoElement = document.createElement('img');
     photoElement.src = photo;
@@ -75,14 +69,22 @@ similarAds.forEach((ad) => {
     adPhotos.appendChild(photoElement);
   });
 
+  // Создание тегов li с фичами
   ad.offer.features.forEach((feature) => {
     const featureElement = document.createElement('li');
     featureElement.classList.add('popup__feature', `popup__feature--${feature}`);
     adFeatures.appendChild(featureElement);
   });
 
+  // Вызовы функции с проверкой элементов карточки(переменных) на отсутствие текста
   checkContent(adTitle);
+  checkContent(adTextAddress);
+  checkContent(adTextPrice);
+  checkContent(adType);
+  checkContent(adTextCapacity);
+  checkContent(adTextTime);
   checkContent(adDescription);
 
+  // Добавление наполненной карточки в блок с картой
   mapCanvas.appendChild(adElement);
 });
