@@ -23,8 +23,16 @@ const similarAds = listAds;
 // console.log(similarAds);
 
 // Проверка на отсутствие текста внутри элемента. Если текста нет - удалить элемент
-const checkContent = (element) => {
+const checkTextContent = (element) => {
   if (element.textContent === '') {
+    element.remove();
+  }
+  return element;
+};
+
+// Проверка на отсутствие детей в родителе. Если детей нет, то - удалить родителя
+const checkChild = (element) => {
+  if (element.children.length === 0) {
     element.remove();
   }
   return element;
@@ -77,13 +85,17 @@ similarAds.forEach((ad) => {
   });
 
   // Вызовы функции с проверкой элементов карточки(переменных) на отсутствие текста
-  checkContent(adTitle);
-  checkContent(adTextAddress);
-  checkContent(adTextPrice);
-  checkContent(adType);
-  checkContent(adTextCapacity);
-  checkContent(adTextTime);
-  checkContent(adDescription);
+  checkTextContent(adTitle);
+  checkTextContent(adTextAddress);
+  checkTextContent(adTextPrice);
+  checkTextContent(adType);
+  checkTextContent(adTextCapacity);
+  checkTextContent(adTextTime);
+  checkTextContent(adDescription);
+
+  // Вызовы функции с проверкой на наличие детей в родителе
+  checkChild(adFeatures);
+  checkChild(adPhotos);
 
   // Добавление наполненной карточки в блок с картой
   mapCanvas.appendChild(adElement);
