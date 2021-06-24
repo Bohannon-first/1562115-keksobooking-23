@@ -1,9 +1,7 @@
 import {getRandomNumber} from './util.js';
 
-// Количество необходимых объектов для генерации
 const QUANTITY_ADS = 10;
 
-// Массив с заголовками предложений
 const TITLES = [
   'Тишина и покой загородной жизни',
   'С видом на сад',
@@ -17,13 +15,11 @@ const TITLES = [
   'Замечательное место для приема гостей и релакса',
 ];
 
-// Диапазон цен
 const PRICES = {
   MIN: 1000,
   MAX: 100000,
 };
 
-// Типы жилья
 const TYPE_HOUSES = [
   'palace',
   'flat',
@@ -32,7 +28,6 @@ const TYPE_HOUSES = [
   'hotel',
 ];
 
-// Количество комнат
 const ROOMS = {
   MIN: 1,
   MAX: 5,
@@ -42,21 +37,18 @@ const GUESTS = {
   MAX: 25,
 };
 
-// Время начала регистрации
 const CHECKIN = [
   '12:00',
   '13:00',
   '14:00',
 ];
 
-// Время окончания суток и выезда
 const CHECKOUT = [
   '12:00',
   '13:00',
   '14:00',
 ];
 
-// Список преимуществ
 const FEATURES = [
   'wifi',
   'dishwasher',
@@ -66,7 +58,6 @@ const FEATURES = [
   'conditioner',
 ];
 
-// Список описаний помещений
 const DESCRIPTIONS = [
   'Можно дышать свежим воздухом не вдыхая смог проезжающего автотранспорта благодаря тому, что окна квартиры выходят на парк.',
   'Отсутствует проблема с парковкой. Всегда свободные парковочные места, можно удобно припарковаться рядом с домом.',
@@ -80,14 +71,12 @@ const DESCRIPTIONS = [
   'Каждый уголок квартиры освещен светом добра и любви',
 ];
 
-// Список фотографий
 const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
-// Координаты местонахождения на карте
 const LOCATION = {
   LAT: {
     MIN: 35.65000,
@@ -99,10 +88,8 @@ const LOCATION = {
   },
 };
 
-// Массив аватаров
 const arrayAvatars = [];
 
-// Счётчик заполнения массива аватаров URL-ссылками
 for (let imageCounter = 1; imageCounter <= QUANTITY_ADS; imageCounter++) {
   if (imageCounter < 10) {
     arrayAvatars.push(`img/avatars/user0${imageCounter}.png`);
@@ -111,19 +98,16 @@ for (let imageCounter = 1; imageCounter <= QUANTITY_ADS; imageCounter++) {
   }
 }
 
-// Вырезание/удаление случайного элемента из массива аватаров
 const cutRandomElementArray = function (someArray) {
   return someArray.splice(getRandomNumber(0, someArray.length - 1), 1);
 };
 
-// Получение рандомного элемента из массива
 const getRandomElementArray = function (someArray) {
   return someArray[getRandomNumber(0, someArray.length -1)];
 };
 
-// Получение массива случайной длины из другого массива
 const getArrayRandomLength = function (someArray) {
-  const someIndexArray = getRandomNumber(1, someArray.length); // Получение рандомного индекса элемента массива
+  const someIndexArray = getRandomNumber(1, someArray.length);
   const newRandomArray = [];
   for (let i = 0; i < someIndexArray; i++) {
     newRandomArray.push(someArray[i]);
@@ -131,26 +115,25 @@ const getArrayRandomLength = function (someArray) {
   return newRandomArray;
 };
 
-// Функция генерации объектов
 const createAds = function () {
   const locationX = getRandomNumber(LOCATION.LAT.MIN, LOCATION.LAT.MAX, 5);
   const locationY = getRandomNumber(LOCATION.LNG.MIN, LOCATION.LNG.MAX, 5);
   return {
     author: {
-      avatar: `${cutRandomElementArray(arrayAvatars).join()}`,
+      avatar: cutRandomElementArray(arrayAvatars).join(),
     },
     offer: {
-      title: `${cutRandomElementArray(TITLES)}`,
+      title: cutRandomElementArray(TITLES),
       address: `${locationX}, ${locationY}`,
-      price: `${getRandomNumber(PRICES.MIN, PRICES.MAX)} рублей`,
-      type: `${getRandomElementArray(TYPE_HOUSES)}`,
-      rooms: `${getRandomNumber(ROOMS.MIN, ROOMS.MAX)} комнат(ы)`,
-      guests: `${getRandomNumber(GUESTS.MIN, GUESTS.MAX)} человек(а)`,
-      checkin: `Время заселения ${getRandomElementArray(CHECKIN)}`,
-      checkout: `Время выезда ${getRandomElementArray(CHECKOUT)}`,
-      features: `${getArrayRandomLength(FEATURES).join(', ')}`,
-      description: `${cutRandomElementArray(DESCRIPTIONS)}`,
-      photos: `${getArrayRandomLength(PHOTOS).join(', ')}`,
+      price: `${getRandomNumber(PRICES.MIN, PRICES.MAX)}`,
+      type: getRandomElementArray(TYPE_HOUSES),
+      rooms: `${getRandomNumber(ROOMS.MIN, ROOMS.MAX)}`,
+      guests: `${getRandomNumber(GUESTS.MIN, GUESTS.MAX)}`,
+      checkin: getRandomElementArray(CHECKIN),
+      checkout: getRandomElementArray(CHECKOUT),
+      features: getArrayRandomLength(FEATURES),
+      description: cutRandomElementArray(DESCRIPTIONS),
+      photos: getArrayRandomLength(PHOTOS),
     },
     location: {
       lat: `${locationX}`,
@@ -161,5 +144,5 @@ const createAds = function () {
 
 const listAds = new Array(QUANTITY_ADS).fill(null).map(() => createAds());
 listAds; // Чтобы eslint не ругался, что listAds не используется
-// console.log(listAds);
 
+export{listAds};
