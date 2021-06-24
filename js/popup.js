@@ -15,7 +15,6 @@ const TYPE_HOUSES_DICTIONARY = {
 };
 
 const similarAds = listAds;
-// console.log(similarAds);
 
 similarAds.forEach((ad) => {
   const adElement = similarPopup.cloneNode(true);
