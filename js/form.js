@@ -74,11 +74,64 @@ inputPriceAd.addEventListener('input', () => {
 });
 
 
-const choiceRooms = adForm.querySelector('#room_number');
-const capacity = adForm.querySelector('#capacity');
+const choiceRooms = adForm.querySelector('#room_number'); // 1-й select
+const capacity = adForm.querySelector('#capacity'); // 2-й select
+const choiceRoomsElements = choiceRooms.querySelectorAll('option'); // Коллекция option'ов
 
-choiceRooms.addEventListener('click', () => {
-  if () {
-    capacity.remove();
+choiceRooms.addEventListener('change', () => {
+  const index = Number(choiceRooms.value);
+  // console.log(index);
+
+  if (index === 1) {
+    console.log('Ты выбрал одну комнату');
+    capacity.options[0].setAttribute('disabled', 'disabled');
+    capacity.options[1].setAttribute('disabled', 'disabled');
+    capacity.options[2].setAttribute('selected', 'selected');
+    capacity.options[3].setAttribute('disabled', 'disabled');
+  } else if (index === 2) {
+    capacity.options[0].setAttribute('disabled', 'disabled');
+    capacity.options[1].setAttribute('selected', 'selected');
+    capacity.options[3].setAttribute('disabled', 'disabled');
+    console.log('Ты выбрал две комнаты');
+  } else if (index === 3) {
+    capacity.options[0].setAttribute('selected', 'selected');
+    capacity.options[3].setAttribute('disabled', 'disabled');
+    console.log('Ты выбрал три комнаты');
+  } else if (index === 100) {
+    capacity.options[0].setAttribute('disabled', 'disabled');
+    capacity.options[1].setAttribute('disabled', 'disabled');
+    capacity.options[2].setAttribute('disabled', 'disabled');
+    capacity.options[3].setAttribute('selected', 'selected');
+    console.log('Ты выбрал сто комнат');
+  } else {
+
   }
 });
+
+// const handlerRooms = function (evt) {
+//   if (evt.target.textContent === '1 комната') {
+//     console.log('Ты выбрал одну комнату');
+//   }
+// };
+// choiceRooms.addEventListener('change', handlerRooms);
+
+
+// console.log(choiceRoomsElements);
+// choiceRoomsElements.forEach((choiceRoomsElement) => {
+//   choiceRoomsElement.addEventListener('click', () => {
+//     console.log('Клик!');
+//   });
+// });
+
+
+// choiceRooms.addEventListener('change', (evt) => {
+//   if (evt.choiceRoomsElements[0]) {
+//     console.log('Ты выбрал одну комнату');
+//   } else if (evt.choiceRoomsElements[1]) {
+//     console.log('Ты выбрал две комнаты');
+//   } else if (evt.choiceRoomsElements[2]) {
+//     console.log('Ты выбрал три комнаты');
+//   } else if (evt.choiceRoomsElements[3]) {
+//     console.log('Ты выбрал сто комнат');
+//   }
+// });
