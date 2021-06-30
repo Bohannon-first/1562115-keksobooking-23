@@ -76,62 +76,46 @@ inputPriceAd.addEventListener('input', () => {
 
 const choiceRooms = adForm.querySelector('#room_number'); // 1-й select
 const capacity = adForm.querySelector('#capacity'); // 2-й select
-const choiceRoomsElements = choiceRooms.querySelectorAll('option'); // Коллекция option'ов
+
+const removeAttributes = (options) => {
+  for (let i = 0; i < options.length; i++) {
+    options[i].removeAttribute('disabled');
+    options[i].removeAttribute('selected');
+  }
+};
 
 choiceRooms.addEventListener('change', () => {
   const index = Number(choiceRooms.value);
-  // console.log(index);
+  removeAttributes(capacity.options);
 
   if (index === 1) {
-    console.log('Ты выбрал одну комнату');
+    if (capacity.options[0] || capacity.options[1] || capacity.options[3]) {
+      capacity.setCustomValidity('Ошибка! Одна комната только для одного человека');
+      // console.log('Ошибка! Одна комната только для одного человека');
+    }
     capacity.options[0].setAttribute('disabled', 'disabled');
     capacity.options[1].setAttribute('disabled', 'disabled');
     capacity.options[2].setAttribute('selected', 'selected');
     capacity.options[3].setAttribute('disabled', 'disabled');
+    // console.log('Ты выбрал одну комнату');
   } else if (index === 2) {
+    if (capacity.options[0] || capacity.options[3]) {
+      capacity.setCustomValidity('Ошибка! Две комнаты только для одного или двух человек');
+      // console.log('Ошибка! Две комнаты только для одного или двух человек');
+    }
     capacity.options[0].setAttribute('disabled', 'disabled');
     capacity.options[1].setAttribute('selected', 'selected');
     capacity.options[3].setAttribute('disabled', 'disabled');
-    console.log('Ты выбрал две комнаты');
+    // console.log('Ты выбрал две комнаты');
   } else if (index === 3) {
     capacity.options[0].setAttribute('selected', 'selected');
     capacity.options[3].setAttribute('disabled', 'disabled');
-    console.log('Ты выбрал три комнаты');
-  } else if (index === 100) {
+    // console.log('Ты выбрал три комнаты');
+  } else {
     capacity.options[0].setAttribute('disabled', 'disabled');
     capacity.options[1].setAttribute('disabled', 'disabled');
     capacity.options[2].setAttribute('disabled', 'disabled');
     capacity.options[3].setAttribute('selected', 'selected');
-    console.log('Ты выбрал сто комнат');
-  } else {
-
+    // console.log('Ты выбрал сто комнат');
   }
 });
-
-// const handlerRooms = function (evt) {
-//   if (evt.target.textContent === '1 комната') {
-//     console.log('Ты выбрал одну комнату');
-//   }
-// };
-// choiceRooms.addEventListener('change', handlerRooms);
-
-
-// console.log(choiceRoomsElements);
-// choiceRoomsElements.forEach((choiceRoomsElement) => {
-//   choiceRoomsElement.addEventListener('click', () => {
-//     console.log('Клик!');
-//   });
-// });
-
-
-// choiceRooms.addEventListener('change', (evt) => {
-//   if (evt.choiceRoomsElements[0]) {
-//     console.log('Ты выбрал одну комнату');
-//   } else if (evt.choiceRoomsElements[1]) {
-//     console.log('Ты выбрал две комнаты');
-//   } else if (evt.choiceRoomsElements[2]) {
-//     console.log('Ты выбрал три комнаты');
-//   } else if (evt.choiceRoomsElements[3]) {
-//     console.log('Ты выбрал сто комнат');
-//   }
-// });
