@@ -4,6 +4,14 @@ const adFormElements = adForm.querySelectorAll('fieldset');
 const mapFilters = document.querySelector('.map__filters');
 const mapFiltersElements = mapFilters.children;
 
+const inputTitleAd = adForm.querySelector('.ad-form__input-title');
+const MIN_LENGTH_TITLE = 30;
+const MAX_LENGTH_TITLE = 100;
+
+const inputPriceAd = adForm.querySelector('.ad-form__input-price');
+const MIN_VALUE_PRICE = 0;
+const MAX_VALUE_PRICE = 1000000;
+
 const disableAdForm = () => {
   adForm.classList.add('ad-form--disabled');
   for (let i = 0; i < adFormElements.length; i++) {
@@ -36,11 +44,6 @@ const enableMapFilters = () => {
 };
 enableMapFilters();
 
-
-const inputTitleAd = adForm.querySelector('.ad-form__input-title');
-const MIN_LENGTH_TITLE = 30;
-const MAX_LENGTH_TITLE = 100;
-
 inputTitleAd.addEventListener('input', () => {
   const lengthValue = inputTitleAd.value.length;
 
@@ -54,10 +57,6 @@ inputTitleAd.addEventListener('input', () => {
 
   inputTitleAd.reportValidity();
 });
-
-const inputPriceAd = adForm.querySelector('.ad-form__input-price');
-const MIN_VALUE_PRICE = 0;
-const MAX_VALUE_PRICE = 1000000;
 
 inputPriceAd.addEventListener('input', () => {
   const valuePrice = inputPriceAd.value;
@@ -73,49 +72,104 @@ inputPriceAd.addEventListener('input', () => {
   inputPriceAd.reportValidity();
 });
 
-
 const choiceRooms = adForm.querySelector('#room_number'); // 1-й select
 const capacity = adForm.querySelector('#capacity'); // 2-й select
 
-const removeAttributes = (options) => {
-  for (let i = 0; i < options.length; i++) {
-    options[i].removeAttribute('disabled');
-    options[i].removeAttribute('selected');
+const numberOfRooms = {
+  1: ['1'],
+  2: ['2', '1'],
+  3: ['3', '2', '1'],
+  100: ['0'],
+};
+
+const validateRooms = (index) => {
+  const currentOfRooms = numberOfRooms[index];
+  let isSelectedChanged = false;
+  for (let i = 0; i < capacity.options.length; i++) {
+    capacity.options[i].removeAttribute('selected');
+  }
+
+  for (let i = 0; i < capacity.options.length; i++) {
+    const value = capacity.options[i].value;
+    if (currentOfRooms.includes(value)) {
+      capacity.options[i].setAttribute('style', 'display:block');
+      if (!isSelectedChanged) {
+        capacity.options[i].setAttribute('selected', 'selected');
+        isSelectedChanged = true;
+      }
+    } else {
+      capacity.options[i].setAttribute('style', 'display:none');
+    }
   }
 };
 
-choiceRooms.addEventListener('change', () => {
-  const index = Number(choiceRooms.value);
-  removeAttributes(capacity.options);
+validateRooms(1);
 
-  if (index === 1) {
-    if (capacity.options[0] || capacity.options[1] || capacity.options[3]) {
-      capacity.setCustomValidity('Ошибка! Одна комната только для одного человека');
-      // console.log('Ошибка! Одна комната только для одного человека');
-    }
-    capacity.options[0].setAttribute('disabled', 'disabled');
-    capacity.options[1].setAttribute('disabled', 'disabled');
-    capacity.options[2].setAttribute('selected', 'selected');
-    capacity.options[3].setAttribute('disabled', 'disabled');
-    // console.log('Ты выбрал одну комнату');
-  } else if (index === 2) {
-    if (capacity.options[0] || capacity.options[3]) {
-      capacity.setCustomValidity('Ошибка! Две комнаты только для одного или двух человек');
-      // console.log('Ошибка! Две комнаты только для одного или двух человек');
-    }
-    capacity.options[0].setAttribute('disabled', 'disabled');
-    capacity.options[1].setAttribute('selected', 'selected');
-    capacity.options[3].setAttribute('disabled', 'disabled');
-    // console.log('Ты выбрал две комнаты');
-  } else if (index === 3) {
-    capacity.options[0].setAttribute('selected', 'selected');
-    capacity.options[3].setAttribute('disabled', 'disabled');
-    // console.log('Ты выбрал три комнаты');
-  } else {
-    capacity.options[0].setAttribute('disabled', 'disabled');
-    capacity.options[1].setAttribute('disabled', 'disabled');
-    capacity.options[2].setAttribute('disabled', 'disabled');
-    capacity.options[3].setAttribute('selected', 'selected');
-    // console.log('Ты выбрал сто комнат');
-  }
+choiceRooms.addEventListener('change', () => {
+  const index = choiceRooms.value;
+  validateRooms(index);
+});
+
+const typeHousing = adForm.querySelector('#type');
+
+// typeHousing.addEventListener('change', () => {
+//   const index = typeHousing.value;
+//   // inputPriceAd.value = '';
+
+//   if (index === 'bungalow') {
+//     inputPriceAd.placeholder = 0;
+//     inputPriceAd.min = 0;
+//   } else if (index === 'flat') {
+//     inputPriceAd.placeholder = 1000;
+//     inputPriceAd.min = 1000;
+//   } else if (index === 'hotel') {
+//     inputPriceAd.placeholder = 3000;
+//     inputPriceAd.min = 3000;
+//   } else if (index === 'house') {
+//     inputPriceAd.placeholder = 5000;
+//     inputPriceAd.min = 5000;
+//   } else {
+//     inputPriceAd.placeholder = 10000;
+//     inputPriceAd.min = 10000;
+//   }
+
+//   inputPriceAd.reportValidity();
+// });
+
+
+const minPriceHousing = {
+  'bungalow': {
+    placeholder: 0,
+    min: 0,
+  },
+  'flat': {
+    placeholder: 1000,
+    min: 1000,
+  },
+  'hotel': {
+    placeholder: 3000,
+    min: 3000,
+  },
+  'house': {
+    placeholder: 5000,
+    min: 5000,
+  },
+  'palace': {
+    placeholder: 10000,
+    min: 10000,
+  },
+};
+
+
+const validateHousing = (type) => {
+  const currentTypeHousing = minPriceHousing[type];
+
+  // console.log(currentTypeHousing);
+};
+
+
+typeHousing.addEventListener('change', () => {
+  const type = typeHousing.value;
+  validateHousing(type);
+  // console.log(type);
 });
