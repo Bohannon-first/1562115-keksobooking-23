@@ -48,7 +48,8 @@ const minPriceHousing = {
 
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
-const timeOptions = adForm.querySelectorAll('.ad-form__choose-time');
+const fieldsetForTime = adForm.querySelector('.ad-form__element--time');
+const timeOptions = fieldsetForTime.querySelectorAll('select');
 
 const disableAdForm = () => {
   adForm.classList.add('ad-form--disabled');
