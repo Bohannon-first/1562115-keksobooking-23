@@ -12,6 +12,44 @@ const inputPriceAd = adForm.querySelector('.ad-form__input-price');
 const MIN_VALUE_PRICE = 0;
 const MAX_VALUE_PRICE = 1000000;
 
+const choiceRooms = adForm.querySelector('#room_number');
+const capacity = adForm.querySelector('#capacity');
+
+const numberOfRooms = {
+  1: ['1'],
+  2: ['2', '1'],
+  3: ['3', '2', '1'],
+  100: ['0'],
+};
+
+const typeHousing = adForm.querySelector('#type');
+const minPriceHousing = {
+  'bungalow': {
+    placeholder: 0,
+    min: 0,
+  },
+  'flat': {
+    placeholder: 1000,
+    min: 1000,
+  },
+  'hotel': {
+    placeholder: 3000,
+    min: 3000,
+  },
+  'house': {
+    placeholder: 5000,
+    min: 5000,
+  },
+  'palace': {
+    placeholder: 10000,
+    min: 10000,
+  },
+};
+
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
+const timeOptions = adForm.querySelectorAll('.ad-form__choose-time');
+
 const disableAdForm = () => {
   adForm.classList.add('ad-form--disabled');
   for (let i = 0; i < adFormElements.length; i++) {
@@ -72,16 +110,6 @@ inputPriceAd.addEventListener('input', () => {
   inputPriceAd.reportValidity();
 });
 
-const choiceRooms = adForm.querySelector('#room_number'); // 1-й select
-const capacity = adForm.querySelector('#capacity'); // 2-й select
-
-const numberOfRooms = {
-  1: ['1'],
-  2: ['2', '1'],
-  3: ['3', '2', '1'],
-  100: ['0'],
-};
-
 const validateRooms = (index) => {
   const currentOfRooms = numberOfRooms[index];
   let isSelectedChanged = false;
@@ -110,66 +138,30 @@ choiceRooms.addEventListener('change', () => {
   validateRooms(index);
 });
 
-const typeHousing = adForm.querySelector('#type');
-
-// typeHousing.addEventListener('change', () => {
-//   const index = typeHousing.value;
-//   // inputPriceAd.value = '';
-
-//   if (index === 'bungalow') {
-//     inputPriceAd.placeholder = 0;
-//     inputPriceAd.min = 0;
-//   } else if (index === 'flat') {
-//     inputPriceAd.placeholder = 1000;
-//     inputPriceAd.min = 1000;
-//   } else if (index === 'hotel') {
-//     inputPriceAd.placeholder = 3000;
-//     inputPriceAd.min = 3000;
-//   } else if (index === 'house') {
-//     inputPriceAd.placeholder = 5000;
-//     inputPriceAd.min = 5000;
-//   } else {
-//     inputPriceAd.placeholder = 10000;
-//     inputPriceAd.min = 10000;
-//   }
-
-//   inputPriceAd.reportValidity();
-// });
-
-
-const minPriceHousing = {
-  'bungalow': {
-    placeholder: 0,
-    min: 0,
-  },
-  'flat': {
-    placeholder: 1000,
-    min: 1000,
-  },
-  'hotel': {
-    placeholder: 3000,
-    min: 3000,
-  },
-  'house': {
-    placeholder: 5000,
-    min: 5000,
-  },
-  'palace': {
-    placeholder: 10000,
-    min: 10000,
-  },
-};
-
-
 const validateHousing = (type) => {
   const currentTypeHousing = minPriceHousing[type];
-
-  // console.log(currentTypeHousing);
+  inputPriceAd.placeholder = currentTypeHousing.placeholder;
+  inputPriceAd.min = currentTypeHousing.min;
 };
-
 
 typeHousing.addEventListener('change', () => {
   const type = typeHousing.value;
   validateHousing(type);
-  // console.log(type);
+  inputPriceAd.reportValidity();
 });
+
+for (let i = 0; i < timeOptions.length; i++) {
+
+  timeOptions[i].addEventListener('change', () => {
+    const id = timeOptions[i].getAttribute('id');
+    let select;
+
+    if (id === 'timein') {
+      select = timeOut;
+    } else if (id === 'timeout') {
+      select = timeIn;
+    }
+
+    return select.value = timeOptions[i].value;
+  });
+}
