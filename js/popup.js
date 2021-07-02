@@ -10,7 +10,7 @@ const TYPE_HOUSES_DICTIONARY = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
   house: 'Дом',
-  palace: 'Дворец Путинa',
+  palace: 'Дворец',
   hotel: 'Отель',
 };
 
