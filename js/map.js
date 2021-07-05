@@ -1,9 +1,17 @@
 import {mapCanvas} from './popup.js';
+import {enableAdForm, enableMapFilters, inputAddress} from './form.js';
 
 const map = L.map(mapCanvas);
+map.on('load', () => {
+  enableAdForm();
+  enableMapFilters();
+
+  inputAddress.value = `${35.68170}, ${139.75389}`;
+  inputAddress.setAttribute('readonly', 'readonly');
+});
 map.setView({
-  lat: 59.92749,
-  lng: 30.31127,
+  lat: 35.68170,
+  lng: 139.75389,
 }, 10);
 
 L.tileLayer(
@@ -12,3 +20,28 @@ L.tileLayer(
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
+
+const mainIconMarker = L.icon({
+  iconUrl: '../img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
+
+const mainMarker = L.marker(
+  {
+    lat: 35.68170,
+    lng: 139.75389,
+  },
+  { draggable: true,
+    icon: mainIconMarker,
+  },
+);
+
+mainMarker.addTo(map);
+
+mainMarker.on('move', (evt) => {
+  const latitude = evt.target.getLatLng().lat.toFixed(5);
+  const longitude = evt.target.getLatLng().lng.toFixed(5);
+  inputAddress.value = `${latitude}, ${longitude}`;
+});
+
