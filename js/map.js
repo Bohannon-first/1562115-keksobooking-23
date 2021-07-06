@@ -1,5 +1,7 @@
-import {mapCanvas} from './popup.js';
+import {mapCanvas, similarAds, similarPopup} from './popup.js';
 import {enableAdForm, enableMapFilters, inputAddress} from './form.js';
+console.log(similarAds);
+// console.log(similarPopup);
 
 const map = L.map(mapCanvas);
 map.on('load', () => {
@@ -45,3 +47,38 @@ mainMarker.on('move', (evt) => {
   inputAddress.value = `${latitude}, ${longitude}`;
 });
 
+const createCustomPopup = () => {
+  const popupElement = similarPopup.cloneNode(true);
+
+};
+// createCustomPopup();
+
+
+
+
+
+
+similarAds.forEach(({location}) => {
+
+  const regularIcon = L.icon({
+    iconUrl: '../img/pin.svg',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  });
+
+  const lat = location.lat;
+  const lng = location.lng;
+
+  const marker = L.marker({
+    lat,
+    lng,
+  },
+  {
+    icon: regularIcon,
+  },
+  );
+
+  marker.addTo(map);
+  marker.bindPopup();
+  marker.bindPopup(`${lat}, ${lng}`);
+});

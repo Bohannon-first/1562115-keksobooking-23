@@ -136,8 +136,8 @@ const createAds = function () {
       photos: getArrayRandomLength(PHOTOS),
     },
     location: {
-      lat: `${locationX}`,
-      lng: `${locationY}`,
+      lat: locationX,
+      lng: locationY,
     },
   };
 };
