@@ -64,9 +64,12 @@ const createCustomPopup = (author, offer) => {
   title.textContent = offer.title;
   address.textContent = offer.address;
   price.textContent = `${offer.price} ₽/ночь`;
+  if (!offer.price) {price.remove();}
   typeOfHousing.textContent = TYPE_HOUSES_DICTIONARY[offer.type];
   capacity.textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
+  if (!offer.rooms || !offer.guests) {capacity.remove();}
   time.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
+  if (!offer.checkin || !offer.checkout) {time.remove();}
   description.textContent = offer.description;
 
   offer.photos.forEach((photo) => {
@@ -87,10 +90,7 @@ const createCustomPopup = (author, offer) => {
 
   checkTextContent(title);
   checkTextContent(address);
-  checkTextContent(price);
   checkTextContent(typeOfHousing);
-  checkTextContent(capacity);
-  checkTextContent(time);
   checkTextContent(description);
 
   checkChild(features);
