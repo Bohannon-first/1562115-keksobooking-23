@@ -69,4 +69,4 @@ similarAds.forEach((ad) => {
   // mapCanvas.appendChild(adElement);
 });
 
-export {mapCanvas, similarAds, similarPopup};
+export {mapCanvas, similarAds, similarPopup, TYPE_HOUSES_DICTIONARY};

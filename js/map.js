@@ -1,7 +1,6 @@
-import {mapCanvas, similarAds, similarPopup} from './popup.js';
+import {mapCanvas, similarAds, similarPopup, TYPE_HOUSES_DICTIONARY} from './popup.js';
 import {enableAdForm, enableMapFilters, inputAddress} from './form.js';
-console.log(similarAds);
-// console.log(similarPopup);
+import {checkTextContent, checkChild} from './util.js';
 
 const map = L.map(mapCanvas);
 map.on('load', () => {
@@ -47,18 +46,60 @@ mainMarker.on('move', (evt) => {
   inputAddress.value = `${latitude}, ${longitude}`;
 });
 
-const createCustomPopup = () => {
+const createCustomPopup = (author, offer) => {
   const popupElement = similarPopup.cloneNode(true);
 
+  const avatar = popupElement.querySelector('.popup__avatar');
+  const title = popupElement.querySelector('.popup__title');
+  const address = popupElement.querySelector('.popup__text--address');
+  const price = popupElement.querySelector('.popup__text--price');
+  const typeOfHousing = popupElement.querySelector('.popup__type');
+  const capacity = popupElement.querySelector('.popup__text--capacity');
+  const time = popupElement.querySelector('.popup__text--time');
+  const features = popupElement.querySelector('.popup__features');
+  const description = popupElement.querySelector('.popup__description');
+  const photos = popupElement.querySelector('.popup__photos');
+
+  avatar.src = author.avatar;
+  title.textContent = offer.title;
+  address.textContent = offer.address;
+  price.textContent = `${offer.price} ₽/ночь`;
+  typeOfHousing.textContent = TYPE_HOUSES_DICTIONARY[offer.type];
+  capacity.textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
+  time.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
+  description.textContent = offer.description;
+
+  offer.photos.forEach((photo) => {
+    const photoElement = document.createElement('img');
+    photoElement.src = photo;
+    photoElement.classList.add('popup__photo');
+    photoElement.width = 45;
+    photoElement.height = 40;
+    photoElement.alt = 'Фотография жилья';
+    photos.appendChild(photoElement);
+  });
+
+  offer.features.forEach((feature) => {
+    const featureElement = document.createElement('li');
+    featureElement.classList.add('popup__feature', `popup__feature--${feature}`);
+    features.appendChild(featureElement);
+  });
+
+  checkTextContent(title);
+  checkTextContent(address);
+  checkTextContent(price);
+  checkTextContent(typeOfHousing);
+  checkTextContent(capacity);
+  checkTextContent(time);
+  checkTextContent(description);
+
+  checkChild(features);
+  checkChild(photos);
+
+  return popupElement;
 };
-// createCustomPopup();
 
-
-
-
-
-
-similarAds.forEach(({location}) => {
+similarAds.forEach(({author, offer, location}) => {
 
   const regularIcon = L.icon({
     iconUrl: '../img/pin.svg',
@@ -79,6 +120,9 @@ similarAds.forEach(({location}) => {
   );
 
   marker.addTo(map);
-  marker.bindPopup();
-  marker.bindPopup(`${lat}, ${lng}`);
+  marker.bindPopup(createCustomPopup(author, offer),
+    {
+      keepInView: true,
+    },
+  );
 });

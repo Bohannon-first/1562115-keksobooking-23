@@ -125,10 +125,10 @@ const createAds = function () {
     offer: {
       title: cutRandomElementArray(TITLES),
       address: `${locationX}, ${locationY}`,
-      price: `${getRandomNumber(PRICES.MIN, PRICES.MAX)}`,
+      price: getRandomNumber(PRICES.MIN, PRICES.MAX),
       type: getRandomElementArray(TYPE_HOUSES),
-      rooms: `${getRandomNumber(ROOMS.MIN, ROOMS.MAX)}`,
-      guests: `${getRandomNumber(GUESTS.MIN, GUESTS.MAX)}`,
+      rooms: getRandomNumber(ROOMS.MIN, ROOMS.MAX),
+      guests: getRandomNumber(GUESTS.MIN, GUESTS.MAX),
       checkin: getRandomElementArray(CHECKIN),
       checkout: getRandomElementArray(CHECKOUT),
       features: getArrayRandomLength(FEATURES),
