@@ -66,5 +66,7 @@ similarAds.forEach((ad) => {
   checkChild(adFeatures);
   checkChild(adPhotos);
 
-  mapCanvas.appendChild(adElement);
+  // mapCanvas.appendChild(adElement);
 });
+
+export {mapCanvas, similarAds, similarPopup, TYPE_HOUSES_DICTIONARY};

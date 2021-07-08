@@ -51,6 +51,8 @@ const timeOut = adForm.querySelector('#timeout');
 const fieldsetForTime = adForm.querySelector('.ad-form__element--time');
 const timeOptions = fieldsetForTime.querySelectorAll('select');
 
+const inputAddress = adForm.querySelector('#address');
+
 const disableAdForm = () => {
   adForm.classList.add('ad-form--disabled');
   for (let i = 0; i < adFormElements.length; i++) {
@@ -67,13 +69,12 @@ const disableMapFilters = () => {
 };
 disableMapFilters();
 
-const enabledAdForm = () => {
+const enableAdForm = () => {
   adForm.classList.remove('ad-form--disabled');
   for (let i = 0; i < adFormElements.length; i++) {
     adFormElements[i].removeAttribute('disabled');
   }
 };
-enabledAdForm();
 
 const enableMapFilters = () => {
   mapFilters.classList.remove('ad-form--disabled');
@@ -81,7 +82,6 @@ const enableMapFilters = () => {
     mapFiltersElements[i].removeAttribute('disabled');
   }
 };
-enableMapFilters();
 
 inputTitleAd.addEventListener('input', () => {
   const lengthValue = inputTitleAd.value.length;
@@ -166,3 +166,5 @@ for (let i = 0; i < timeOptions.length; i++) {
     return select.value = timeOptions[i].value;
   });
 }
+
+export {enableAdForm, enableMapFilters, inputAddress};
