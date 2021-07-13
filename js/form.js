@@ -1,3 +1,6 @@
+import {sendData} from './server.js';
+import {showAlert} from './util.js';
+
 const adForm = document.querySelector('.ad-form');
 const adFormElements = adForm.querySelectorAll('fieldset');
 
@@ -167,4 +170,16 @@ for (let i = 0; i < timeOptions.length; i++) {
   });
 }
 
-export {enableAdForm, enableMapFilters, inputAddress};
+const setUserFormSubmit = (onSuccess) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => onSuccess(),
+      () => showAlert('Не удалось отправить форму. Попробуйте еще раз'),
+      new FormData(evt.target),
+    );
+  });
+};
+
+export {enableAdForm, enableMapFilters, inputAddress, setUserFormSubmit};

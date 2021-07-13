@@ -1,6 +1,5 @@
-import {mapCanvas, similarAds, similarPopup, TYPE_HOUSES_DICTIONARY} from './popup.js';
+import {mapCanvas, createCustomPopup} from './popup.js';
 import {enableAdForm, enableMapFilters, inputAddress} from './form.js';
-import {checkTextContent, checkChild} from './util.js';
 
 const map = L.map(mapCanvas);
 map.on('load', () => {
@@ -46,83 +45,34 @@ mainMarker.on('move', (evt) => {
   inputAddress.value = `${latitude}, ${longitude}`;
 });
 
-const createCustomPopup = (author, offer) => {
-  const popupElement = similarPopup.cloneNode(true);
+const myAds = (ads) => {
+  ads.forEach(({author, offer, location}) => {
 
-  const avatar = popupElement.querySelector('.popup__avatar');
-  const title = popupElement.querySelector('.popup__title');
-  const address = popupElement.querySelector('.popup__text--address');
-  const price = popupElement.querySelector('.popup__text--price');
-  const typeOfHousing = popupElement.querySelector('.popup__type');
-  const capacity = popupElement.querySelector('.popup__text--capacity');
-  const time = popupElement.querySelector('.popup__text--time');
-  const features = popupElement.querySelector('.popup__features');
-  const description = popupElement.querySelector('.popup__description');
-  const photos = popupElement.querySelector('.popup__photos');
+    const regularIcon = L.icon({
+      iconUrl: '../img/pin.svg',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+    });
 
-  avatar.src = author.avatar;
-  title.textContent = offer.title;
-  address.textContent = offer.address;
-  price.textContent = `${offer.price} ₽/ночь`;
-  if (!offer.price) {price.remove();}
-  typeOfHousing.textContent = TYPE_HOUSES_DICTIONARY[offer.type];
-  capacity.textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
-  if (!offer.rooms || !offer.guests) {capacity.remove();}
-  time.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
-  if (!offer.checkin || !offer.checkout) {time.remove();}
-  description.textContent = offer.description;
+    const lat = location.lat;
+    const lng = location.lng;
 
-  offer.photos.forEach((photo) => {
-    const photoElement = document.createElement('img');
-    photoElement.src = photo;
-    photoElement.classList.add('popup__photo');
-    photoElement.width = 45;
-    photoElement.height = 40;
-    photoElement.alt = 'Фотография жилья';
-    photos.appendChild(photoElement);
+    const marker = L.marker({
+      lat,
+      lng,
+    },
+    {
+      icon: regularIcon,
+    },
+    );
+
+    marker.addTo(map);
+    marker.bindPopup(createCustomPopup(author, offer),
+      {
+        keepInView: true,
+      },
+    );
   });
-
-  offer.features.forEach((feature) => {
-    const featureElement = document.createElement('li');
-    featureElement.classList.add('popup__feature', `popup__feature--${feature}`);
-    features.appendChild(featureElement);
-  });
-
-  checkTextContent(title);
-  checkTextContent(address);
-  checkTextContent(typeOfHousing);
-  checkTextContent(description);
-
-  checkChild(features);
-  checkChild(photos);
-
-  return popupElement;
 };
 
-similarAds.forEach(({author, offer, location}) => {
-
-  const regularIcon = L.icon({
-    iconUrl: '../img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-
-  const lat = location.lat;
-  const lng = location.lng;
-
-  const marker = L.marker({
-    lat,
-    lng,
-  },
-  {
-    icon: regularIcon,
-  },
-  );
-
-  marker.addTo(map);
-  marker.bindPopup(createCustomPopup(author, offer),
-    {
-      keepInView: true,
-    },
-  );
-});
+export {myAds};
