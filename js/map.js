@@ -46,33 +46,35 @@ mainMarker.on('move', (evt) => {
 });
 
 const myAds = (ads) => {
-  ads.forEach(({author, offer, location}) => {
+  if (ads) {
+    ads.forEach(({author, offer, location}) => {
 
-    const regularIcon = L.icon({
-      iconUrl: '../img/pin.svg',
-      iconSize: [40, 40],
-      iconAnchor: [20, 40],
-    });
+      const regularIcon = L.icon({
+        iconUrl: '../img/pin.svg',
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+      });
 
-    const lat = location.lat;
-    const lng = location.lng;
+      const lat = location.lat;
+      const lng = location.lng;
 
-    const marker = L.marker({
-      lat,
-      lng,
-    },
-    {
-      icon: regularIcon,
-    },
-    );
-
-    marker.addTo(map);
-    marker.bindPopup(createCustomPopup(author, offer),
-      {
-        keepInView: true,
+      const marker = L.marker({
+        lat,
+        lng,
       },
-    );
-  });
+      {
+        icon: regularIcon,
+      },
+      );
+
+      marker.addTo(map);
+      marker.bindPopup(createCustomPopup(author, offer),
+        {
+          keepInView: true,
+        },
+      );
+    });
+  }
 };
 
 export {myAds};

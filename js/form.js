@@ -17,6 +17,7 @@ const MAX_VALUE_PRICE = 1000000;
 
 const choiceRooms = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
+const descriptionTextarea = adForm.querySelector('#description');
 
 const numberOfRooms = {
   1: ['1'],
@@ -182,4 +183,4 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
-export {enableAdForm, enableMapFilters, inputAddress, setUserFormSubmit};
+export {enableAdForm, enableMapFilters, inputAddress, setUserFormSubmit, inputTitleAd, inputPriceAd, descriptionTextarea};

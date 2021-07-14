@@ -1,15 +1,23 @@
-
-// fetch('https://23.javascript.pages.academy/keksobooking/data')
-//   .then((response) => response.json())
-//   .then((ads) => {
-//   console.log(ads);
-//   });
+import {inputTitleAd, inputPriceAd, descriptionTextarea, inputAddress} from './form.js';
 
 const getData = (onSuccess) => {
   fetch('https://23.javascript.pages.academy/keksobooking/data')
+
+    // .then((response) => {
+    //   if (response.ok) {
+    //     response.json();
+    //     // console.log(response);
+    //     onSuccess();
+    //   } else {
+    //     onFail('Не удалось получить данные с сервера');
+    //   }
+    // })
+    // .catch(() => {
+    //   onFail('Не удалось получить данные с сервера');
+    // });
+
     .then((response) => response.json())
     .then((someAds) => {
-      // console.log(someAds);
       onSuccess(someAds);
     });
 };
@@ -24,13 +32,17 @@ const sendData = (onSuccess, onFail, body) => {
   )
     .then((response) => {
       if (response.ok) {
-        onSuccess();
+        inputTitleAd.value = '';
+        inputPriceAd.value = '';
+        descriptionTextarea.value = '';
+        inputAddress.value = `${35.68170}, ${139.75389}`;
+        // onSuccess();
       } else {
         onFail('Не удалось отправить форму. Попробуйте ещё раз');
       }
     })
     .catch(() => {
-      onFail('Не удалось отправить форму. Попробуйте ещё раз');
+      onFail('Не удалось отправить форму. Попробуйте ещё раз1');
     });
 };
 
