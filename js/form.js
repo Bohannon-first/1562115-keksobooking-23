@@ -1,5 +1,4 @@
-import {sendData} from './server.js';
-import {showAlert} from './util.js';
+import {sendData, showErrorPopup} from './server.js';
 
 const adForm = document.querySelector('.ad-form');
 const adFormElements = adForm.querySelectorAll('fieldset');
@@ -177,10 +176,10 @@ const setUserFormSubmit = (onSuccess) => {
 
     sendData(
       () => onSuccess(),
-      () => showAlert('Не удалось отправить форму. Попробуйте еще раз'),
+      () => showErrorPopup(),
       new FormData(evt.target),
     );
   });
 };
 
-export {enableAdForm, enableMapFilters, inputAddress, setUserFormSubmit, inputTitleAd, inputPriceAd, descriptionTextarea};
+export {enableAdForm, enableMapFilters, inputAddress, setUserFormSubmit, inputTitleAd, inputPriceAd, descriptionTextarea, adForm};
