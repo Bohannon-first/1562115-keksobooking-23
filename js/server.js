@@ -1,5 +1,6 @@
 import {inputAddress, adForm} from './form.js';
 import {showAlert} from './util.js';
+// import {mainMarker} from './map.js';
 
 const templateSuccess = document.querySelector('#success').content;
 const popupSuccess = templateSuccess.querySelector('.success');
@@ -7,15 +8,29 @@ const popupSuccess = templateSuccess.querySelector('.success');
 const templateError = document.querySelector('#error').content;
 const popupError = templateError.querySelector('.error');
 
+
+const isClickMouse = (popup) => {
+  window.addEventListener('click', (evt) => {
+    if (evt.target) {
+      popup.remove();
+    }
+  });
+};
+
+const isEskDown = (popup) => {
+  window.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape'|| evt.key === 'Esc') {
+      popup.remove();
+    }
+  });
+};
+
 const showSuccessPopup = () => {
   const success = popupSuccess.cloneNode(true);
   document.body.appendChild(success);
 
-  window.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape'|| evt.key === 'Esc') {
-      success.remove();
-    }
-  });
+  isEskDown(success);
+  isClickMouse(success);
 };
 
 const showErrorPopup = () => {
@@ -23,11 +38,8 @@ const showErrorPopup = () => {
   const errorButton = error.querySelector('.error__button');
   document.body.appendChild(error);
 
-  window.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape'|| evt.key === 'Esc') {
-      error.remove();
-    }
-  });
+  isEskDown(error);
+  isClickMouse(error);
 
   errorButton.addEventListener('click', () => {
     error.remove();
@@ -61,6 +73,7 @@ const sendData = (onSuccess, onFail, body) => {
       if (response.ok) {
         adForm.reset();
         inputAddress.value = `${35.68170}, ${139.75389}`;
+        // mainMarker.setLatLng(L.latLng(`${35.68170}, ${139.75389}`));
         showSuccessPopup();
       } else {
         onFail('Не удалось отправить форму. Попробуйте ещё раз1');

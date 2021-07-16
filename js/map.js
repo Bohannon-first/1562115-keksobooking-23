@@ -77,4 +77,4 @@ const myAds = (ads) => {
   }
 };
 
-export {myAds};
+export {myAds, mainMarker};
