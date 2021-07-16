@@ -1,3 +1,6 @@
+import {sendData, showErrorPopup, showSuccessPopup} from './server.js';
+// import {mainMarker} from './map.js';
+
 const adForm = document.querySelector('.ad-form');
 const adFormElements = adForm.querySelectorAll('fieldset');
 
@@ -14,6 +17,7 @@ const MAX_VALUE_PRICE = 1000000;
 
 const choiceRooms = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
+const descriptionTextarea = adForm.querySelector('#description');
 
 const numberOfRooms = {
   1: ['1'],
@@ -167,4 +171,21 @@ for (let i = 0; i < timeOptions.length; i++) {
   });
 }
 
-export {enableAdForm, enableMapFilters, inputAddress};
+const setUserFormSubmit = () => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => {
+        adForm.reset();
+        inputAddress.value = `${35.68170}, ${139.75389}`;
+        showSuccessPopup();
+      // mainMarker.setLatLng(L.latLng(`${35.68170}, ${139.75389}`)),
+      },
+      () => showErrorPopup(),
+      new FormData(evt.target),
+    );
+  });
+};
+
+export {enableAdForm, enableMapFilters, inputAddress, setUserFormSubmit, inputTitleAd, inputPriceAd, descriptionTextarea, adForm};
