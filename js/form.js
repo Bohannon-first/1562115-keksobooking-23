@@ -1,4 +1,5 @@
-import {sendData, showErrorPopup} from './server.js';
+import {sendData, showErrorPopup, showSuccessPopup} from './server.js';
+// import {mainMarker} from './map.js';
 
 const adForm = document.querySelector('.ad-form');
 const adFormElements = adForm.querySelectorAll('fieldset');
@@ -170,12 +171,17 @@ for (let i = 0; i < timeOptions.length; i++) {
   });
 }
 
-const setUserFormSubmit = (onSuccess) => {
+const setUserFormSubmit = () => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     sendData(
-      () => onSuccess(),
+      () => {
+        adForm.reset();
+        inputAddress.value = `${35.68170}, ${139.75389}`;
+        showSuccessPopup();
+      // mainMarker.setLatLng(L.latLng(`${35.68170}, ${139.75389}`)),
+      },
       () => showErrorPopup(),
       new FormData(evt.target),
     );

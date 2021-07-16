@@ -1,4 +1,3 @@
-import {inputAddress, adForm} from './form.js';
 import {showAlert} from './util.js';
 // import {mainMarker} from './map.js';
 
@@ -71,10 +70,7 @@ const sendData = (onSuccess, onFail, body) => {
   )
     .then((response) => {
       if (response.ok) {
-        adForm.reset();
-        inputAddress.value = `${35.68170}, ${139.75389}`;
-        // mainMarker.setLatLng(L.latLng(`${35.68170}, ${139.75389}`));
-        showSuccessPopup();
+        onSuccess();
       } else {
         onFail('Не удалось отправить форму. Попробуйте ещё раз1');
       }
@@ -84,4 +80,4 @@ const sendData = (onSuccess, onFail, body) => {
     });
 };
 
-export {getData, sendData, showErrorPopup};
+export {getData, sendData, showErrorPopup, showSuccessPopup};
