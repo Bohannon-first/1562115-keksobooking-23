@@ -19,6 +19,8 @@ const choiceRooms = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
 const descriptionTextarea = adForm.querySelector('#description');
 
+const buttonFormReset = adForm.querySelector('.ad-form__reset');
+
 const numberOfRooms = {
   1: ['1'],
   2: ['2', '1'],
@@ -187,5 +189,12 @@ const setUserFormSubmit = () => {
     );
   });
 };
+
+buttonFormReset.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  adForm.reset();
+  inputAddress.value = `${mainMarker.lat}, ${mainMarker.lng}`;
+  returnMarker();
+});
 
 export {enableAdForm, enableMapFilters, inputAddress, setUserFormSubmit, inputTitleAd, inputPriceAd, descriptionTextarea, adForm};
