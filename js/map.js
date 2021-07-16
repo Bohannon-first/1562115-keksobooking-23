@@ -77,4 +77,16 @@ const myAds = (ads) => {
   }
 };
 
-export {myAds, mainMarker};
+const returnMarker = () => {
+  mainMarker.setLatLng({
+    lat: 35.68170,
+    lng: 139.75389,
+  });
+
+  map.setView({
+    lat: 35.68170,
+    lng: 139.75389,
+  }, 10);
+};
+
+export {myAds, returnMarker, mainMarker};
