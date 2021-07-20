@@ -2,6 +2,7 @@ import {mapFilters} from './form.js';
 import {QUANTITY_ADS} from './data.js';
 import {myAds, markerGroup} from './map.js';
 import {data} from './main.js';
+import {debounce} from './util.js';
 
 // Фильтры формы
 const listTypeHousing = mapFilters.querySelector('#housing-type');
@@ -23,7 +24,7 @@ const featureElevator = fieldsetForFeature.querySelector('#filter-elevator');
 const featureConditioner = fieldsetForFeature.querySelector('#filter-conditioner');
 
 // Массив с выбранными фичами
-const selectedFeatures = [];
+// const selectedFeatures = [];
 
 const createAds = [];
 
@@ -47,23 +48,24 @@ const checkQuantityRooms = (ad) => +listHousingRooms.value === ad.offer.rooms ||
 // Проверка количества гостей
 const checkQuantityGuests = (ad) => +listHousingGuests.value === ad.offer.guests || listHousingGuests.value === 'any';
 
-
-// Ранг фичей
-const getFeaturesRank = (ad) => {
-  let rank = 0;
-
-  if (featureWifi.value === ad.offer.features) {
-    rank += 1;
+// Фильтр фичеей
+const checkFeatures = (ad) => Array.from(featureInputs).every((input) => {
+  if (!input.checked) {
+    return true;
   }
-};
+  else if (!ad.offer.features) {
+    return false;
+  }
+  return ad.offer.features.includes(input.value);
+});
 
 mapFilters.addEventListener('change', () => {
   markerGroup.clearLayers();
   const newData = [...data];
-  console.log(newData);
+  // console.log(newData);
   const filteredData = newData.filter((ad) =>
     // console.log(checkPrice(ad), checkTypeHousing(ad));
-    checkTypeHousing(ad) && checkPrice(ad) && checkQuantityRooms(ad) && checkQuantityGuests(ad));
+    checkTypeHousing(ad) && checkPrice(ad) && checkQuantityRooms(ad) && checkQuantityGuests(ad) && checkFeatures(ad));
   // console.log(filteredData);
   myAds(filteredData.slice(0, QUANTITY_ADS));
 });

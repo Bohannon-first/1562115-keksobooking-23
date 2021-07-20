@@ -53,4 +53,14 @@ const showAlert = () => {
   }, ALERT_SHOW_TIME);
 };
 
-export {getRandomNumber, checkTextContent, checkChild, showAlert};
+
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+
+export {getRandomNumber, checkTextContent, checkChild, showAlert, debounce};

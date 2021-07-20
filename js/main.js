@@ -14,7 +14,7 @@ let data = [];
 
 getData((someAds) => {
   data = someAds;
-  // console.log(data);
+  console.log(data);
   const slicedData = [...data].slice(0, QUANTITY_ADS);
   // console.log(slicedData);
   myAds(slicedData);
