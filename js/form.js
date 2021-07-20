@@ -197,4 +197,4 @@ buttonFormReset.addEventListener('click', (evt) => {
   returnMarker();
 });
 
-export {enableAdForm, enableMapFilters, inputAddress, setUserFormSubmit, inputTitleAd, inputPriceAd, descriptionTextarea, adForm};
+export {enableAdForm, enableMapFilters, inputAddress, setUserFormSubmit, inputTitleAd, inputPriceAd, descriptionTextarea, adForm, mapFilters};

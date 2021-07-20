@@ -145,4 +145,4 @@ const createAds = function () {
 const listAds = new Array(QUANTITY_ADS).fill(null).map(() => createAds());
 listAds; // Чтобы eslint не ругался, что listAds не используется
 
-export{listAds};
+export{listAds, QUANTITY_ADS};

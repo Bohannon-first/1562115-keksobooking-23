@@ -45,8 +45,11 @@ mainMarker.on('move', (evt) => {
   inputAddress.value = `${latitude}, ${longitude}`;
 });
 
+const markerGroup = L.layerGroup().addTo(map);
+
 const myAds = (ads) => {
   if (ads) {
+    // добавить очищение карты от маркеров
     ads.forEach(({author, offer, location}) => {
 
       const regularIcon = L.icon({
@@ -67,7 +70,7 @@ const myAds = (ads) => {
       },
       );
 
-      marker.addTo(map);
+      marker.addTo(markerGroup);
       marker.bindPopup(createCustomPopup(author, offer),
         {
           keepInView: true,
@@ -89,4 +92,4 @@ const returnMarker = () => {
   }, 10);
 };
 
-export {myAds, returnMarker, mainMarker};
+export {myAds, returnMarker, mainMarker, markerGroup};

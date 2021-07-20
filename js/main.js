@@ -4,12 +4,23 @@ import './popup.js';
 import './map.js';
 import './form.js';
 import './server.js';
+import './filters.js';
 import {myAds} from './map.js';
 import {getData} from './server.js';
 import {setUserFormSubmit} from './form.js';
+import {QUANTITY_ADS} from './data.js';
+
+let data = [];
 
 getData((someAds) => {
-  myAds(someAds);
+  data = someAds;
+  // console.log(data);
+  const slicedData = [...data].slice(0, QUANTITY_ADS);
+  // console.log(slicedData);
+  myAds(slicedData);
+  // console.log(someAds);
 });
 
 setUserFormSubmit();
+
+export {data};
