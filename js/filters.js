@@ -1,9 +1,9 @@
 import {mapFilters} from './form.js';
-import {QUANTITY_ADS} from './data.js';
 import {myAds, markerGroup} from './map.js';
 import {data} from './main.js';
 import {debounce} from './util.js';
 
+const QUANTITY_ADS = 10;
 const listTypeHousing = mapFilters.querySelector('#housing-type');
 const listHousingPrice = mapFilters.querySelector('#housing-price');
 const listHousingRooms = mapFilters.querySelector('#housing-rooms');
@@ -44,3 +44,5 @@ mapFilters.addEventListener('change', debounce(() => {
     checkTypeHousing(ad) && checkPrice(ad) && checkQuantityRooms(ad) && checkQuantityGuests(ad) && checkFeatures(ad));
   myAds(filteredData.slice(0, QUANTITY_ADS));
 }));
+
+export {QUANTITY_ADS};

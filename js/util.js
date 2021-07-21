@@ -17,6 +17,19 @@ const getRandomNumber = (minNum, maxNum, lengthNum = 0) => {
 };
 getRandomNumber();
 
+const cutRandomElementArray = (someArray) => someArray.splice(getRandomNumber(0, someArray.length - 1), 1);
+
+const getRandomElementArray = (someArray) => someArray[getRandomNumber(0, someArray.length -1)];
+
+const getArrayRandomLength = (someArray) => {
+  const someIndexArray = getRandomNumber(1, someArray.length);
+  const newRandomArray = [];
+  for (let i = 0; i < someIndexArray; i++) {
+    newRandomArray.push(someArray[i]);
+  }
+  return newRandomArray;
+};
+
 const checkTextContent = (element) => {
   if (element.textContent === '') {
     element.remove();
@@ -63,4 +76,4 @@ function debounce (callback, timeoutDelay = 500) {
 }
 
 
-export {getRandomNumber, checkTextContent, checkChild, showAlert, debounce};
+export {getRandomNumber, cutRandomElementArray, getRandomElementArray, getArrayRandomLength, checkTextContent, checkChild, showAlert, debounce};

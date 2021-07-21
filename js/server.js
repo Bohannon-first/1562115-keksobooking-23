@@ -6,6 +6,8 @@ const popupSuccess = templateSuccess.querySelector('.success');
 const templateError = document.querySelector('#error').content;
 const popupError = templateError.querySelector('.error');
 
+const urlGetData = 'https://23.javascript.pages.academy/keksobooking/data';
+const urlSendData = 'https://23.javascript.pages.academy/keksobooking';
 
 const isClickMouse = (popup) => {
   window.addEventListener('click', (evt) => {
@@ -45,7 +47,7 @@ const showErrorPopup = () => {
 };
 
 const getData = (onSuccess) => {
-  fetch('https://23.javascript.pages.academy/keksobooking/data')
+  fetch(urlGetData)
 
     .then((response) => {
       if (response.ok) {
@@ -61,7 +63,7 @@ const getData = (onSuccess) => {
 
 const sendData = (onSuccess, onFail, body) => {
   fetch(
-    ' https://23.javascript.pages.academy/keksobooking',
+    urlSendData,
     {
       method: 'POST',
       body,

@@ -105,11 +105,14 @@ inputTitleAd.addEventListener('input', () => {
 
 inputPriceAd.addEventListener('input', () => {
   const valuePrice = inputPriceAd.value;
+  const minPrice = minPriceHousing[typeHousing.value];
 
   if (valuePrice < MIN_VALUE_PRICE) {
     inputPriceAd.setCustomValidity('Минимальная цена не должна быть отрицательной');
   } else if (valuePrice > MAX_VALUE_PRICE) {
     inputPriceAd.setCustomValidity('Максимальная цена не должна превышать 1000000');
+  } else if (valuePrice < minPrice.min) {
+    inputPriceAd.setCustomValidity('Необходимо ввести минимальную сумму');
   } else {
     inputPriceAd.setCustomValidity('');
   }
