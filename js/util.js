@@ -1,6 +1,6 @@
 const ALERT_SHOW_TIME = 3000;
 
-const getRandomNumber = function (minNum, maxNum, lengthNum = 0) {
+const getRandomNumber = (minNum, maxNum, lengthNum = 0) => {
   if (minNum < 0) {
     return 'Ошибка. Вы ввели отрицательное число. Число должно быть положительное.';
   }
@@ -53,4 +53,14 @@ const showAlert = () => {
   }, ALERT_SHOW_TIME);
 };
 
-export {getRandomNumber, checkTextContent, checkChild, showAlert};
+
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+
+export {getRandomNumber, checkTextContent, checkChild, showAlert, debounce};

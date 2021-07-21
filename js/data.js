@@ -98,15 +98,11 @@ for (let imageCounter = 1; imageCounter <= QUANTITY_ADS; imageCounter++) {
   }
 }
 
-const cutRandomElementArray = function (someArray) {
-  return someArray.splice(getRandomNumber(0, someArray.length - 1), 1);
-};
+const cutRandomElementArray = (someArray) => someArray.splice(getRandomNumber(0, someArray.length - 1), 1);
 
-const getRandomElementArray = function (someArray) {
-  return someArray[getRandomNumber(0, someArray.length -1)];
-};
+const getRandomElementArray = (someArray) => someArray[getRandomNumber(0, someArray.length -1)];
 
-const getArrayRandomLength = function (someArray) {
+const getArrayRandomLength = (someArray) => {
   const someIndexArray = getRandomNumber(1, someArray.length);
   const newRandomArray = [];
   for (let i = 0; i < someIndexArray; i++) {
@@ -115,7 +111,7 @@ const getArrayRandomLength = function (someArray) {
   return newRandomArray;
 };
 
-const createAds = function () {
+const createAds = () => {
   const locationX = getRandomNumber(LOCATION.LAT.MIN, LOCATION.LAT.MAX, 5);
   const locationY = getRandomNumber(LOCATION.LNG.MIN, LOCATION.LNG.MAX, 5);
   return {
@@ -143,6 +139,6 @@ const createAds = function () {
 };
 
 const listAds = new Array(QUANTITY_ADS).fill(null).map(() => createAds());
-listAds; // Чтобы eslint не ругался, что listAds не используется
+listAds;
 
-export{listAds};
+export{listAds, QUANTITY_ADS};

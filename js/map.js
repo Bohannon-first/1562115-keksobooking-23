@@ -45,6 +45,8 @@ mainMarker.on('move', (evt) => {
   inputAddress.value = `${latitude}, ${longitude}`;
 });
 
+const markerGroup = L.layerGroup().addTo(map);
+
 const myAds = (ads) => {
   if (ads) {
     ads.forEach(({author, offer, location}) => {
@@ -67,7 +69,7 @@ const myAds = (ads) => {
       },
       );
 
-      marker.addTo(map);
+      marker.addTo(markerGroup);
       marker.bindPopup(createCustomPopup(author, offer),
         {
           keepInView: true,
@@ -77,4 +79,16 @@ const myAds = (ads) => {
   }
 };
 
-export {myAds, mainMarker};
+const returnMarker = () => {
+  mainMarker.setLatLng({
+    lat: 35.68170,
+    lng: 139.75389,
+  });
+
+  map.setView({
+    lat: 35.68170,
+    lng: 139.75389,
+  }, 10);
+};
+
+export {myAds, returnMarker, mainMarker, markerGroup};

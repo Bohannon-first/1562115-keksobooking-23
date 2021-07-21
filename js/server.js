@@ -1,5 +1,4 @@
 import {showAlert} from './util.js';
-// import {mainMarker} from './map.js';
 
 const templateSuccess = document.querySelector('#success').content;
 const popupSuccess = templateSuccess.querySelector('.success');
