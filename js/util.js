@@ -1,6 +1,6 @@
 const ALERT_SHOW_TIME = 3000;
 
-const getRandomNumber = function (minNum, maxNum, lengthNum = 0) {
+const getRandomNumber = (minNum, maxNum, lengthNum = 0) => {
   if (minNum < 0) {
     return 'Ошибка. Вы ввели отрицательное число. Число должно быть положительное.';
   }

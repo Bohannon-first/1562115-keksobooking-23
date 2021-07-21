@@ -49,7 +49,6 @@ const markerGroup = L.layerGroup().addTo(map);
 
 const myAds = (ads) => {
   if (ads) {
-    // добавить очищение карты от маркеров
     ads.forEach(({author, offer, location}) => {
 
       const regularIcon = L.icon({
