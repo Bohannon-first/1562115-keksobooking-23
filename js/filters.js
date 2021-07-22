@@ -1,5 +1,5 @@
 import {mapFilters} from './form.js';
-import {myAds, markerGroup} from './map.js';
+import {getMyAds, markerGroup} from './map.js';
 import {data} from './main.js';
 import {debounce} from './util.js';
 
@@ -42,7 +42,7 @@ mapFilters.addEventListener('change', debounce(() => {
   const newData = [...data];
   const filteredData = newData.filter((ad) =>
     checkTypeHousing(ad) && checkPrice(ad) && checkQuantityRooms(ad) && checkQuantityGuests(ad) && checkFeatures(ad));
-  myAds(filteredData.slice(0, QUANTITY_ADS));
+  getMyAds(filteredData.slice(0, QUANTITY_ADS));
 }));
 
 export {QUANTITY_ADS};

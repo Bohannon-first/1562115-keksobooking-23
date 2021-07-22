@@ -1,10 +1,9 @@
 import {mapCanvas, createCustomPopup} from './popup.js';
-import {enableAdForm, enableMapFilters, inputAddress} from './form.js';
+import {enableAdForm, inputAddress} from './form.js';
 
 const map = L.map(mapCanvas);
 map.on('load', () => {
   enableAdForm();
-  enableMapFilters();
 
   inputAddress.value = `${35.68170}, ${139.75389}`;
   inputAddress.setAttribute('readonly', 'readonly');
@@ -47,7 +46,7 @@ mainMarker.on('move', (evt) => {
 
 const markerGroup = L.layerGroup().addTo(map);
 
-const myAds = (ads) => {
+const getMyAds = (ads) => {
   if (ads) {
     ads.forEach(({author, offer, location}) => {
 
@@ -91,4 +90,4 @@ const returnMarker = () => {
   }, 10);
 };
 
-export {myAds, returnMarker, mainMarker, markerGroup};
+export {getMyAds, returnMarker, mainMarker, markerGroup};

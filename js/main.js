@@ -4,9 +4,9 @@ import './map.js';
 import './form.js';
 import './server.js';
 import './filters.js';
-import {myAds} from './map.js';
+import {getMyAds} from './map.js';
 import {getData} from './server.js';
-import {setUserFormSubmit} from './form.js';
+import {setUserFormSubmit, enableMapFilters} from './form.js';
 import {QUANTITY_ADS} from './filters.js';
 
 let data = [];
@@ -14,9 +14,10 @@ let data = [];
 getData((someAds) => {
   data = someAds;
   const slicedData = [...data].slice(0, QUANTITY_ADS);
-  myAds(slicedData);
+  getMyAds(slicedData);
+  enableMapFilters();
 });
 
 setUserFormSubmit();
 
-export {data};
+export {data, QUANTITY_ADS};

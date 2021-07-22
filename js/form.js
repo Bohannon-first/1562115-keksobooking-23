@@ -1,5 +1,8 @@
+import {returnMarker, mainMarker, markerGroup, getMyAds} from './map.js';
 import {sendData, showErrorPopup, showSuccessPopup} from './server.js';
-import {returnMarker, mainMarker} from './map.js';
+import {data} from './main.js';
+import {QUANTITY_ADS} from './main.js';
+
 
 const adForm = document.querySelector('.ad-form');
 const adFormElements = adForm.querySelectorAll('fieldset');
@@ -182,7 +185,10 @@ const setUserFormSubmit = () => {
 
     sendData(
       () => {
+        mapFilters.reset();
         adForm.reset();
+        markerGroup.clearLayers();
+        getMyAds(data.slice(0, QUANTITY_ADS));
         inputAddress.value = `${mainMarker.lat}, ${mainMarker.lng}`;
         returnMarker();
         showSuccessPopup();
@@ -195,7 +201,10 @@ const setUserFormSubmit = () => {
 
 buttonFormReset.addEventListener('click', (evt) => {
   evt.preventDefault();
+  mapFilters.reset();
   adForm.reset();
+  markerGroup.clearLayers();
+  getMyAds(data.slice(0, QUANTITY_ADS));
   inputAddress.value = `${mainMarker.lat}, ${mainMarker.lng}`;
   returnMarker();
 });
