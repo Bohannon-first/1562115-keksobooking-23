@@ -1,17 +1,33 @@
 import {mapCanvas, createCustomPopup} from './popup.js';
 import {enableAdForm, inputAddress} from './form.js';
 
+const latitudeCoordinates = 35.68170;
+const longitudeCoordinates = 139.75389;
+const scaleMap = 10;
+
+const mainIconMarkerProps = {
+  markerUrl: '../img/main-pin.svg',
+  markerSize: [52, 52],
+  markerAnchor: [26, 52],
+};
+
+const regularIconProps = {
+  iconUrl: '../img/pin.svg',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+};
+
 const map = L.map(mapCanvas);
 map.on('load', () => {
   enableAdForm();
 
-  inputAddress.value = `${35.68170}, ${139.75389}`;
+  inputAddress.value = `${latitudeCoordinates}, ${longitudeCoordinates}`;
   inputAddress.setAttribute('readonly', 'readonly');
 });
 map.setView({
-  lat: 35.68170,
-  lng: 139.75389,
-}, 10);
+  lat: latitudeCoordinates,
+  lng: longitudeCoordinates,
+}, scaleMap);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -21,15 +37,15 @@ L.tileLayer(
 ).addTo(map);
 
 const mainIconMarker = L.icon({
-  iconUrl: '../img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconUrl: mainIconMarkerProps.markerUrl,
+  iconSize: mainIconMarkerProps.markerSize,
+  iconAnchor: mainIconMarkerProps.markerAnchor,
 });
 
 const mainMarker = L.marker(
   {
-    lat: 35.68170,
-    lng: 139.75389,
+    lat: latitudeCoordinates,
+    lng: longitudeCoordinates,
   },
   { draggable: true,
     icon: mainIconMarker,
@@ -51,9 +67,9 @@ const getMyAds = (ads) => {
     ads.forEach(({author, offer, location}) => {
 
       const regularIcon = L.icon({
-        iconUrl: '../img/pin.svg',
-        iconSize: [40, 40],
-        iconAnchor: [20, 40],
+        iconUrl: regularIconProps.iconUrl,
+        iconSize: regularIconProps.iconSize,
+        iconAnchor: regularIconProps.iconAnchor,
       });
 
       const lat = location.lat;
@@ -80,14 +96,14 @@ const getMyAds = (ads) => {
 
 const returnMarker = () => {
   mainMarker.setLatLng({
-    lat: 35.68170,
-    lng: 139.75389,
+    lat: latitudeCoordinates,
+    lng: longitudeCoordinates,
   });
 
   map.setView({
-    lat: 35.68170,
-    lng: 139.75389,
-  }, 10);
+    lat: latitudeCoordinates,
+    lng: longitudeCoordinates,
+  }, scaleMap);
 };
 
 export {getMyAds, returnMarker, mainMarker, markerGroup};

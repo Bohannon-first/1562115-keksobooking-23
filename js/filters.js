@@ -3,6 +3,18 @@ import {getMyAds, markerGroup} from './map.js';
 import {data} from './main.js';
 import {debounce} from './util.js';
 
+const RANGE_PRICE = {
+  min: 10000,
+  max: 50000,
+};
+
+const priceSelection = {
+  low: 'low',
+  middle: 'middle',
+  high: 'high',
+  any: 'any',
+};
+
 const QUANTITY_ADS = 10;
 const listTypeHousing = mapFilters.querySelector('#housing-type');
 const listHousingPrice = mapFilters.querySelector('#housing-price');
@@ -17,10 +29,10 @@ const checkTypeHousing = (ad) => listTypeHousing.value === ad.offer.type || list
 const checkPrice = (ad) => {
   const price = ad.offer.price;
   return (
-    listHousingPrice.value === 'middle' && price >= 10000 && price <= 50000) ||
-    (listHousingPrice.value === 'low' && price < 10000) ||
-    (listHousingPrice.value === 'high' && price > 50000) ||
-    (listHousingPrice.value === 'any');
+    listHousingPrice.value === priceSelection.middle && price >= RANGE_PRICE.min && price <= RANGE_PRICE.max) ||
+    (listHousingPrice.value === priceSelection.low && price < RANGE_PRICE.min) ||
+    (listHousingPrice.value === priceSelection.high && price > RANGE_PRICE.max) ||
+    (listHousingPrice.value === priceSelection.any);
 };
 
 const checkQuantityRooms = (ad) => +listHousingRooms.value === ad.offer.rooms || listHousingRooms.value === 'any';

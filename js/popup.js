@@ -1,10 +1,6 @@
 import {checkTextContent} from './util.js';
 import {checkChild} from './util.js';
 
-const mapCanvas = document.querySelector('#map-canvas');
-const templatePopup = document.querySelector('#card').content;
-const similarPopup = templatePopup.querySelector('.popup');
-
 const TYPE_HOUSES_DICTIONARY = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
@@ -12,6 +8,10 @@ const TYPE_HOUSES_DICTIONARY = {
   palace: 'Дворец',
   hotel: 'Отель',
 };
+
+const mapCanvas = document.querySelector('#map-canvas');
+const templatePopup = document.querySelector('#card').content;
+const similarPopup = templatePopup.querySelector('.popup');
 
 const createCustomPopup = (author, offer) => {
   const popupElement = similarPopup.cloneNode(true);

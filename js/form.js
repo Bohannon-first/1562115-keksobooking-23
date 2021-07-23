@@ -2,13 +2,13 @@ import {returnMarker, mainMarker, markerGroup, getMyAds} from './map.js';
 import {sendData, showErrorPopup, showSuccessPopup} from './server.js';
 import {data} from './main.js';
 import {QUANTITY_ADS} from './main.js';
-
+import {removePhoto} from './photos.js';
 
 const adForm = document.querySelector('.ad-form');
 const adFormElements = adForm.querySelectorAll('fieldset');
 
 const mapFilters = document.querySelector('.map__filters');
-const mapFiltersElements = mapFilters.children;
+const mapFiltersElements = mapFilters.querySelectorAll('select');
 
 const inputTitleAd = adForm.querySelector('.ad-form__input-title');
 const MIN_LENGTH_TITLE = 30;
@@ -64,32 +64,32 @@ const inputAddress = adForm.querySelector('#address');
 
 const disableAdForm = () => {
   adForm.classList.add('ad-form--disabled');
-  for (let i = 0; i < adFormElements.length; i++) {
-    adFormElements[i].setAttribute('disabled', 'disabled');
-  }
+  adFormElements.forEach((fieldset) => {
+    fieldset.setAttribute('disabled', 'disabled');
+  });
 };
 disableAdForm();
 
 const disableMapFilters = () => {
   mapFilters.classList.add('ad-form--disabled');
-  for (let i = 0; i < mapFiltersElements.length; i++) {
-    mapFiltersElements[i].setAttribute('disabled', 'disabled');
-  }
+  mapFiltersElements.forEach((select) => {
+    select.setAttribute('disabled', 'disabled');
+  });
 };
 disableMapFilters();
 
 const enableAdForm = () => {
   adForm.classList.remove('ad-form--disabled');
-  for (let i = 0; i < adFormElements.length; i++) {
-    adFormElements[i].removeAttribute('disabled');
-  }
+  adFormElements.forEach((fieldset) => {
+    fieldset.removeAttribute('disabled');
+  });
 };
 
 const enableMapFilters = () => {
   mapFilters.classList.remove('ad-form--disabled');
-  for (let i = 0; i < mapFiltersElements.length; i++) {
-    mapFiltersElements[i].removeAttribute('disabled');
-  }
+  mapFiltersElements.forEach((select) => {
+    select.removeAttribute('disabled');
+  });
 };
 
 inputTitleAd.addEventListener('input', () => {
@@ -115,7 +115,7 @@ inputPriceAd.addEventListener('input', () => {
   } else if (valuePrice > MAX_VALUE_PRICE) {
     inputPriceAd.setCustomValidity('Максимальная цена не должна превышать 1000000');
   } else if (valuePrice < minPrice.min) {
-    inputPriceAd.setCustomValidity('Необходимо ввести минимальную сумму');
+    inputPriceAd.setCustomValidity('Необходимо ввести минимальную цену');
   } else {
     inputPriceAd.setCustomValidity('');
   }
@@ -163,21 +163,21 @@ typeHousing.addEventListener('change', () => {
   inputPriceAd.reportValidity();
 });
 
-for (let i = 0; i < timeOptions.length; i++) {
 
-  timeOptions[i].addEventListener('change', () => {
-    const id = timeOptions[i].getAttribute('id');
-    let select;
+timeOptions.forEach((select) => {
+  select.addEventListener('change', () => {
+    const id = select.getAttribute('id');
+    let element;
 
     if (id === 'timein') {
-      select = timeOut;
+      element = timeOut;
     } else if (id === 'timeout') {
-      select = timeIn;
+      element = timeIn;
     }
 
-    return select.value = timeOptions[i].value;
+    return element.value = select.value;
   });
-}
+});
 
 const setUserFormSubmit = () => {
   adForm.addEventListener('submit', (evt) => {
@@ -191,6 +191,7 @@ const setUserFormSubmit = () => {
         getMyAds(data.slice(0, QUANTITY_ADS));
         inputAddress.value = `${mainMarker.lat}, ${mainMarker.lng}`;
         returnMarker();
+        removePhoto();
         showSuccessPopup();
       },
       () => showErrorPopup(),
@@ -207,6 +208,7 @@ buttonFormReset.addEventListener('click', (evt) => {
   getMyAds(data.slice(0, QUANTITY_ADS));
   inputAddress.value = `${mainMarker.lat}, ${mainMarker.lng}`;
   returnMarker();
+  removePhoto();
 });
 
 export {enableAdForm, enableMapFilters, inputAddress, setUserFormSubmit, inputTitleAd, inputPriceAd, descriptionTextarea, adForm, mapFilters};
