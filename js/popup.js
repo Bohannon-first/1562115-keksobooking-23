@@ -1,5 +1,4 @@
-import {checkTextContent} from './util.js';
-import {checkChild} from './util.js';
+import {checkChild, checkTextContent, isEscEvent} from './util.js';
 
 const TYPE_HOUSES_DICTIONARY = {
   flat: 'Квартира',
@@ -70,4 +69,33 @@ const createCustomPopup = (author, offer) => {
   return popupElement;
 };
 
-export {mapCanvas, similarPopup, TYPE_HOUSES_DICTIONARY, createCustomPopup};
+const showPopup = (status) => {
+
+  const messageTemplate = document.querySelector(`#${status}`).content.querySelector(`.${status}`);
+  const message = messageTemplate.cloneNode(true);
+  document.body.appendChild(message);
+
+  if (status === 'error') {
+    const errorButton = message.querySelector('.error__button');
+    errorButton.focus();
+  }
+
+  const onMessageEscapeKeyDown = (evt) => {
+    if (isEscEvent(evt)) {
+      evt.preventDefault();
+      message.remove();
+      document.removeEventListener('keydown', onMessageEscapeKeyDown);
+    }
+  };
+
+  const onMessageClick = () => {
+    message.remove();
+    message.removeEventListener('click', onMessageClick);
+    document.removeEventListener('keydown', onMessageEscapeKeyDown);
+  };
+
+  document.addEventListener('keydown', onMessageEscapeKeyDown);
+  message.addEventListener('click', onMessageClick);
+};
+
+export {mapCanvas, similarPopup, TYPE_HOUSES_DICTIONARY, createCustomPopup, showPopup};

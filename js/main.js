@@ -11,7 +11,6 @@ import {getData} from './server.js';
 import {setUserFormSubmit, enableMapFilters} from './form.js';
 import {QUANTITY_ADS} from './filters.js';
 
-
 let data = [];
 
 getData((someAds) => {

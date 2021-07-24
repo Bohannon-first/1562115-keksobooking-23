@@ -1,8 +1,8 @@
 import {returnMarker, mainMarker, markerGroup, getMyAds} from './map.js';
-import {sendData, showErrorPopup, showSuccessPopup} from './server.js';
-import {data} from './main.js';
-import {QUANTITY_ADS} from './main.js';
+import {sendData} from './server.js';
+import {data, QUANTITY_ADS} from './main.js';
 import {removePhoto} from './photos.js';
+import {showPopup} from './popup.js';
 
 const adForm = document.querySelector('.ad-form');
 const adFormElements = adForm.querySelectorAll('fieldset');
@@ -59,7 +59,6 @@ const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
 const fieldsetForTime = adForm.querySelector('.ad-form__element--time');
 const timeOptions = fieldsetForTime.querySelectorAll('select');
-
 const inputAddress = adForm.querySelector('#address');
 
 const disableAdForm = () => {
@@ -163,7 +162,6 @@ typeHousing.addEventListener('change', () => {
   inputPriceAd.reportValidity();
 });
 
-
 timeOptions.forEach((select) => {
   select.addEventListener('change', () => {
     const id = select.getAttribute('id');
@@ -192,9 +190,9 @@ const setUserFormSubmit = () => {
         inputAddress.value = `${mainMarker.lat}, ${mainMarker.lng}`;
         returnMarker();
         removePhoto();
-        showSuccessPopup();
+        showPopup('success');
       },
-      () => showErrorPopup(),
+      () => showPopup('error'),
       new FormData(evt.target),
     );
   });

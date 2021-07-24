@@ -8,7 +8,8 @@ const choosePhotoHousing = document.querySelector('.ad-form__input');
 const previewPhotoHousing = document.querySelector('.ad-form__photo');
 
 chooseAvatar.addEventListener('change', () => {
-  previewAvatar.remove();
+  previewAvatar.classList.add('hidden');
+  previewBlock.style.padding = 0;
   const file = chooseAvatar.files[0];
   const fileName = file.name.toLowerCase();
 
@@ -19,8 +20,8 @@ chooseAvatar.addEventListener('change', () => {
 
     reader.addEventListener('load', () => {
       const newAvatart = document.createElement('img');
-      newAvatart.width = 40;
-      newAvatart.height = 40;
+      newAvatart.width = 70;
+      newAvatart.height = 70;
       newAvatart.alt = 'Аватар пользователя';
       newAvatart.src = reader.result;
       previewBlock.appendChild(newAvatart);
@@ -63,6 +64,7 @@ choosePhotoHousing.addEventListener('change', () => {
 const removePhoto = () => {
   previewBlock.innerHTML = '';
   previewPhotoHousing.innerHTML = '';
+  previewAvatar.classList.remove('hidden');
 };
 
 export {removePhoto};

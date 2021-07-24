@@ -53,6 +53,7 @@ const showAlert = () => {
   }, ALERT_SHOW_TIME);
 };
 
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 function debounce (callback, timeoutDelay = 500) {
   let timeoutId;
@@ -62,5 +63,4 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-
-export {getRandomNumber, checkTextContent, checkChild, showAlert, debounce};
+export {getRandomNumber, checkTextContent, checkChild, showAlert, isEscEvent, debounce};

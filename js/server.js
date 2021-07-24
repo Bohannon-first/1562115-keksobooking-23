@@ -1,50 +1,7 @@
 import {showAlert} from './util.js';
 
-const templateSuccess = document.querySelector('#success').content;
-const popupSuccess = templateSuccess.querySelector('.success');
-
-const templateError = document.querySelector('#error').content;
-const popupError = templateError.querySelector('.error');
-
 const urlGetData = 'https://23.javascript.pages.academy/keksobooking/data';
 const urlSendData = 'https://23.javascript.pages.academy/keksobooking';
-
-const isClickMouse = (popup) => {
-  window.addEventListener('click', (evt) => {
-    if (evt.target) {
-      popup.remove();
-    }
-  });
-};
-
-const isEskDown = (popup) => {
-  window.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape'|| evt.key === 'Esc') {
-      popup.remove();
-    }
-  });
-};
-
-const showSuccessPopup = () => {
-  const success = popupSuccess.cloneNode(true);
-  document.body.appendChild(success);
-
-  isEskDown(success);
-  isClickMouse(success);
-};
-
-const showErrorPopup = () => {
-  const error = popupError.cloneNode(true);
-  const errorButton = error.querySelector('.error__button');
-  document.body.appendChild(error);
-
-  isEskDown(error);
-  isClickMouse(error);
-
-  errorButton.addEventListener('click', () => {
-    error.remove();
-  });
-};
 
 const getData = (onSuccess) => {
   fetch(urlGetData)
@@ -81,4 +38,4 @@ const sendData = (onSuccess, onFail, body) => {
     });
 };
 
-export {getData, sendData, showErrorPopup, showSuccessPopup};
+export {getData, sendData};
