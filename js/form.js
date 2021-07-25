@@ -125,25 +125,20 @@ inputPriceAd.addEventListener('input', () => {
 const validateRooms = (index) => {
   const currentOfRooms = numberOfRooms[index];
   let isSelectedChanged = false;
-  for (let i = 0; i < capacity.options.length; i++) {
-    capacity.options[i].removeAttribute('selected');
-  }
 
-  for (let i = 0; i < capacity.options.length; i++) {
-    const value = capacity.options[i].value;
-    if (currentOfRooms.includes(value)) {
-      capacity.options[i].setAttribute('style', 'display:block');
+  Array.from(capacity.options).forEach((option) => {
+    option.removeAttribute('selected');
+    option.setAttribute('style', 'display:none');
+
+    if (currentOfRooms.includes(option.value)) {
+      option.setAttribute('style', 'display:block');
       if (!isSelectedChanged) {
-        capacity.options[i].setAttribute('selected', 'selected');
+        option.setAttribute('selected', 'selected');
         isSelectedChanged = true;
       }
-    } else {
-      capacity.options[i].setAttribute('style', 'display:none');
     }
-  }
+  });
 };
-
-validateRooms(1);
 
 choiceRooms.addEventListener('change', () => {
   const index = choiceRooms.value;
