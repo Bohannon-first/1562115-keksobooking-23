@@ -6,13 +6,13 @@ const longitudeCoordinates = 139.75389;
 const scaleMap = 10;
 
 const mainIconMarkerProps = {
-  markerUrl: '../img/main-pin.svg',
+  markerUrl: '../keksobooking/img/main-pin.svg',
   markerSize: [52, 52],
   markerAnchor: [26, 52],
 };
 
 const regularIconProps = {
-  iconUrl: '../img/pin.svg',
+  iconUrl: '../keksobooking/img/pin.svg',
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 };
